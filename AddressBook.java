@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -104,6 +105,11 @@ public class AddressBook {
         String city = sc.nextLine();
         count = (int) list.stream().filter(n -> n.getCity().equals(city)).count();
         System.out.println("TotalNo : " + count);
+    }
+
+    public void sortByName() {
+        list = list.stream().sorted(Comparator.comparing(Contact :: getCity)).collect(Collectors.toList());
+        list.forEach(i -> System.out.println(i));
     }
     public static void main(String[] args) {
 
