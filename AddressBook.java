@@ -3,6 +3,7 @@ package com.company;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AddressBook {
 
@@ -38,8 +39,8 @@ public class AddressBook {
         long phoneNo = sc.nextLong();
         System.out.println("Enter your emailId : ");
         String email = sc.nextLine();
-        Contact obj = new Contact(firstName, lastName, address, city, state, zip, phoneNo, email);
-        list.add(obj);
+        Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNo, email);
+        list.add(contact);
     }
 
     //Created method for editing contact details
@@ -83,21 +84,15 @@ public class AddressBook {
     //Called method searchByCity for searching contact details by city name
     public void searchByCity() {
         System.out.println("Enter City Name : ");
-        String city = sc.nextLine();
-        for (Contact list : list) {
-            if(((Contact) list).getCity().equals(city))
-                System.out.println(list);
-        }
+        String city = sc.next();
+        list.stream().filter(n -> n.getCity().equals(city)).forEach(i -> System.out.println("Result: "+i.getFirstName()));
     }
 
     //calling method to view contact details by using city name
     public void viewByCity() {
         System.out.println("Enter City Name : ");
         String city = sc.nextLine();
-        for (Contact list : list) {
-            if(list.getCity().equals(city))
-                System.out.println(list);
-        }
+        list.stream().filter(n -> n.getCity().equals(city)).forEach(i -> System.out.println(i));
     }
 
     /*Count number of contact persons based on city*/
@@ -107,15 +102,7 @@ public class AddressBook {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter city name : ");
         String city = sc.nextLine();
-        sc.close();
-        for (Contact list : list)
-        {
-            if (list.getCity().equals(city)) {
-                count++;
-                System.out.println(list);
-
-            }
-        }
+        count = (int) list.stream().filter(n -> n.getCity().equals(city)).count();
         System.out.println("TotalNo : " + count);
     }
     public static void main(String[] args) {
@@ -123,10 +110,8 @@ public class AddressBook {
         AddressBook addressBook = new AddressBook();
         //Displaying the welcome message
         System.out.println("WELCOME TO ADDRESS BOOK PROBLEM");
-        //adding multiple persons
-        addPersons();
-        //Result will show count by city name
-        addressBook.countBasedOnCity();
+        addressBook.addPersons();
+        System.out.println(list);
 
     }
 }
