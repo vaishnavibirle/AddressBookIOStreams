@@ -107,7 +107,14 @@ public class AddressBook {
         System.out.println("TotalNo : " + count);
     }
 
+    //Sorted contact by contact names
     public void sortByName() {
+        list = list.stream().sorted(Comparator.comparing(Contact :: getCity)).collect(Collectors.toList());
+        list.forEach(i -> System.out.println(i));
+    }
+
+    //Sorted all entries in alphabetically by contact city names
+    public void sortByCity() {
         list = list.stream().sorted(Comparator.comparing(Contact :: getCity)).collect(Collectors.toList());
         list.forEach(i -> System.out.println(i));
     }
